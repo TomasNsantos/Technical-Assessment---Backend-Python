@@ -14,3 +14,5 @@ COPY . .
 
 CMD ["python", "-c", "print('Container Python OK')"]
 
+ENV PYTHONPATH=/app
+
