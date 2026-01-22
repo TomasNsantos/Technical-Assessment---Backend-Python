@@ -7,7 +7,10 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from app.database import Base  
-from app.config import settings  
+from app.config import settings 
+from app.models import abastecimento  # noqa: F401
+
+
 
 # Alembic Config object
 config = context.config
@@ -18,7 +21,7 @@ target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode."""
-    url = settings.DATABASE_URL
+    url = settings.database_url
     context.configure(
         url=url,
         target_metadata=target_metadata,

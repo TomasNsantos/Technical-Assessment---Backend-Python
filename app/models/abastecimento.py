@@ -2,7 +2,9 @@ from datetime import datetime
 from enum import Enum as PyEnum
 from decimal import Decimal
 
-from sqlalchemy import Boolean, DateTime, Enum, Integer, Numeric, String, func
+from sqlalchemy import (
+    Boolean, DateTime, Enum, Integer, Numeric, String, func
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -25,7 +27,7 @@ class Abastecimento(Base):
         nullable=False
     )
     tipo_combustivel: Mapped[TipoCombustivel] = mapped_column(
-        Enum(TipoCombustivel, name="tipo_combustivel_enum"),
+        Enum(TipoCombustivel, name="tipocombustivel"),
         nullable=False,
     )
     preco_por_litro: Mapped[Decimal] = mapped_column(
