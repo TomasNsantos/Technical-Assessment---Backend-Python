@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from app.config import settings
+from app.api.routers import abastecimento
+
 
 app = FastAPI(
     title="V-Lab Transport API",
@@ -8,3 +10,5 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+app.include_router(abastecimento.router)
