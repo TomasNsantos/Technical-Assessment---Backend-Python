@@ -1,9 +1,11 @@
 from decimal import Decimal
+from datetime import datetime
+from typing import List, Optional, Tuple
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.abastecimento import Abastecimento
-from app.schemas.abastecimento import AbastecimentoCreate
+from app.models.abastecimento import Abastecimento, TipoCombustivel
+from app.schemas.abastecimento import AbastecimentoCreate, HistoricoResponse 
 from app.repositories.abastecimento_repository import AbastecimentoRepository
 
 
@@ -43,3 +45,36 @@ class AbastecimentoService:
         )
 
         return await self.repository.create(abastecimento)
+
+    async def get_historico_motorista(self, cpf_motorista: str) -> HistoricoResponse:
+        """
+        Retorna o histórico de abastecimentos de um motorista (CPF).
+        """
+        abastecimentos = await self.repository.get_by_cpf(cpf_motorista)
+
+        return HistoricoResponse(
+            cpf_motorista=cpf_motorista,
+            total_abastecimentos=len(abastecimentos),
+            abastecimentos=abastecimentos,
+        )
+    
+    async def list_abastecimentos(
+        self,
+        page: int,
+        size: int,
+        tipo_combustivel: Optional[TipoCombustivel],
+        data_inicio: Optional[datetime],
+        data_fim: Optional[datetime],
+    ) -> Tuple[List[Abastecimento], int]:
+        """
+        Retorna uma lista paginada de abastecimentos com filtros opcionais.
+        """
+        return await self.repository.get_all(
+            page=page,
+            size=size,
+            tipo_combustivel=tipo_combustivel,
+            data_inicio=data_inicio,
+            data_fim=data_fim,
+        )
+
+    
