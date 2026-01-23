@@ -29,6 +29,19 @@ services:
       - "8000:8000"
     command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
+  load_script:
+    build: .
+    container_name: desafio_vlab_load
+    command: python scripts/load_data.py
+    env_file:
+      - .env
+    environment:
+      API_URL: http://api:8000
+      TOTAL_REQUESTS: 200
+      BATCH_SIZE: 20
+    depends_on:
+      - api
+
 
 volumes:
   db_data:
