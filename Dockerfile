@@ -14,5 +14,8 @@ COPY . .
 
 CMD ["python", "-c", "print('Container Python OK')"]
 
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/
+
+HEALTHCHECK --interval=10s --timeout=2s --retries=5 \
+  CMD curl -f http://localhost:8000/health || exit 1
 

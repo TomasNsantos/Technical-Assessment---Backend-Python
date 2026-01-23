@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.config import settings
-from app.api.routers import abastecimento
+from app.api.routers import abastecimento, health
 
 
 app = FastAPI(
@@ -12,3 +12,4 @@ app = FastAPI(
 )
 
 app.include_router(abastecimento.router)
+app.include_router(health.router)
